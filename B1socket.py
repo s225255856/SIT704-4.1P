@@ -8,15 +8,30 @@ password = 'test'
 try:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((server, port))
-    response = s.recv(1024).decode()
-    s.sendall(f'USER {username}\r\n'.encode())
-    response = s.recv(1024).decode()
-    s.sendall(f'PASS {password}\r\n'.encode())
-    response = s.recv(1024).decode()
+
+    #response = s.recv(1024).decode()
+    #s.sendall(f'USER {username}\r\n'.encode())
+    #response = s.recv(1024).decode()
+    #s.sendall(f'PASS {password}\r\n'.encode())
+    #response = s.recv(1024).decode()
+
+    response = s.recv(1024)
+    print("S:", response)
+
+    s.sendall('USER {}\r\n'.format(username))
+    response = s.recv(1024)
+    print("S:", response)
+
+    s.sendall('PASS {}\r\n'.format(password))
+    response = s.recv(1024)
+    print("S:", response)
+
     s.close()
     print("\n Done!")
 
 except socket.error as e:
-    print(f"Socket error {e}")
+    #print(f"Socket error {e}")
+    print("Socket error {}".format(e))
 except Exception as e:
-    print(f"Unexpected error: {e}")
+    #print(f"Unexpected error: {e}")
+    print("Unexpected error {}".format(e))

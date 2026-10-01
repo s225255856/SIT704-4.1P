@@ -4,34 +4,22 @@ server = '192.168.1.112'
 port = 110
 username = 'ustest'
 password = 'test'
-
-try:
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect((server, port))
-
-    #response = s.recv(1024).decode()
-    #s.sendall(f'USER {username}\r\n'.encode())
-    #response = s.recv(1024).decode()
-    #s.sendall(f'PASS {password}\r\n'.encode())
-    #response = s.recv(1024).decode()
-
-    response = s.recv(1024)
-    print("S:", response)
-
-    s.sendall('USER {}\r\n'.format(username))
-    response = s.recv(1024)
-    print("S:", response)
-
-    s.sendall('PASS {}\r\n'.format(password))
-    response = s.recv(1024)
-    print("S:", response)
-
-    s.close()
-    print("\n Done!")
-
-except socket.error as e:
-    #print(f"Socket error {e}")
-    print("Socket error {}".format(e))
-except Exception as e:
-    #print(f"Unexpected error: {e}")
-    print("Unexpected error {}".format(e))
+buffer ="A"*100
+while len(buffer)<= 4000:
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        print(f"we are trying to fuzz with a length of {len(buffer)}")
+        response = s.recv(1024).decode()
+        s.sendall(f'USER {username}\r\n'.encode())
+        response = s.recv(1024).decode()
+        s.sendall(f'PASS {password}\r\n'.encode())
+        response = s.recv(1024).decode()
+        s.close()
+        print("\n Done!")
+        buffer +="A"*200
+    except socket.error as e:
+        print(f"Socket error {e}")
+        #print("Socket error {}".format(e))
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        #print("Unexpected error {}".format(e))

